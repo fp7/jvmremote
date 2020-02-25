@@ -2,8 +2,8 @@
   (:require
    [cider.nrepl.middleware.util.error-handling :refer [with-safe-transport]]
    [clojure.java.io :as io]
-   [orchard.java.classpath :as cp]
-   [orchard.misc :as misc]))
+   [cider.nrepl.inlined-deps.orchard.v0v5v6.orchard.java.classpath :as cp]
+   [cider.nrepl.inlined-deps.orchard.v0v5v6.orchard.misc :as misc]))
 
 (defn file-url?
   [u]
