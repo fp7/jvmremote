@@ -1,0 +1,32 @@
+= jvmremote
+
+Clojure remote control for a jvm process.
+
+If you really want to use clojure but are stuck in a java environment you can use this library to start and nrepl server via a javaagent and then repl all the things
+
+== Examples
+
+=== Starting a non spring boot uber jar
+Start a java process with a simple java jar or from your ide. This seems to work with a spring boot uberjar but you will have no access to your app classes because of the special class loading spring boot does.
+[source]
+----
+java -javaagent:jvmremote-core/build/libs/jvmremote-core.jar=--port,1234,--middleware,'["cider.nrepl/cider-middleware"]' -jar spring-boot-example/build/libs/spring-boot-example.jar
+----
+
+'''
+=== Starting a spring uber jar
+
+This starts a spring boot app packaged in an uberjar and your nrepl server will have access to the application classes.
+[source]
+----
+java -javaagent:jvmremote-spring-boot-uberjar/build/libs/jvmremote-spring-boot-uberjar.jar=--port,1234,--middleware,'["cider.nrepl/cider-middleware"]' -jar spring-boot-example/build/libs/spring-boot-example.jar
+----
+
+=== Capturing a spring application context
+When you need access to the application context from your spring boot app you can use the ctx-captor to do that. This agent will make the spring context available under
+`@io.github.fp7.jvmremote.spring_boot.ctx.SpringBootContextCaptor/ctx`
+
+[source]
+----
+java -javaagent:jvmremote-spring-boot-ctx-captor/build/libs/jvmremote-spring-boot-ctx-captor.jar -javaagent:jvmremote-spring-boot-uberjar/build/libs/jvmremote-spring-boot-uberjar.jar=--port,1234,--middleware,'["cider.nrepl/cider-middleware"]' -jar spring-boot-example/build/libs/spring-boot-example.jar
+----
