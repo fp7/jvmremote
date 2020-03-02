@@ -24,7 +24,9 @@ public class SpringBootNreplStarter {
     args = agentArgs;
 
     new Default()
-        .type(ElementMatchers.named("org.springframework.boot.loader.Launcher"))
+        .type(
+            ElementMatchers.hasSuperType(
+                ElementMatchers.named("org.springframework.boot.loader.Launcher")))
         .transform(
             (builder, typeDescription, classLoader, module) ->
                 builder.visit(
